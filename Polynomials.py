@@ -2,8 +2,9 @@ import math
 
 class Poly: 
 
-    def __init__(self, coeffs1):
+    def __init__(self, coeffs1, c = 2):
         self.coeffs = coeffs1
+        self.c = c
         
 
     def __str__(self):
@@ -12,7 +13,7 @@ class Poly:
        
        for i in range(1, len(self.coeffs)): #loop to end of the list 
          if self.coeffs[i] < 0: # decide if negative or positive sign
-            output.append(f"- {self.coeffs[i]}x^{i}")
+            output.append(f"- {-self.coeffs[i]}x^{i}")
          elif self.coeffs[i] > 0:
             output.append(f"+ {self.coeffs[i]}x^{i}")
          else: 
@@ -33,29 +34,35 @@ class Poly:
 
           new_poly.append(a + b) # append
        return Poly(new_poly)
-
-       
     
- 
+    def dif(self):
+       for i in range(1, len(self.coeffs)):
+          self.coeffs[i] = self.coeffs[i] * i
+       self.c = self.coeffs[0]
+       del(self.coeffs[0])
+       return Poly(self.coeffs)
+    
+    def antidif(self):
+       new_coeff = [self.c] + self.coeffs
+       for i in range(1, len(new_coeff)):
+          new_coeff[i] = (self.coeffs[i - 1]/ i )
+       return Poly(new_coeff)
+       
+
 
 if __name__ == "__main__":
     
-    pa = Poly([1, 2, 4, 7])
-
-    pb = Poly([1, -2, 1, 1])
-
-    pc = pa + pb
-
+    
+    pa = Poly(list(map(int, input("enter coefficients of polynomial a: ").split())))
+    pb = Poly(list(map(int, input("enter coefficients of polynomial b: ").split())))
+   # pa = Poly([1, 2, 3, 4])
+    #pb = Poly([4, -2, 2])
+    pc = (pa + pb) 
     print(pc)
-
-
-
-
-#"coeffs1 = Poly(input("enter values of coefficients").split()) # get coefficients from input "
+    pd = pc.dif()
+    pd = pc.antidif()
+    print(pd)
+   
     
-# print(coeffs1)"
-# coeffs1 = Poly(input("enter values of coefficients").split()) # get coefficients from input 
-    
-# print("why")
 
 
